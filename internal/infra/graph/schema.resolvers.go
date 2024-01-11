@@ -6,6 +6,7 @@ package graph
 
 import (
 	"context"
+
 	"github.com/devfullcycle/20-CleanArch/internal/infra/graph/model"
 	"github.com/devfullcycle/20-CleanArch/internal/usecase"
 )

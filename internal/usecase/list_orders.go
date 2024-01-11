@@ -5,11 +5,6 @@ import (
 	"github.com/devfullcycle/20-CleanArch/internal/entity"
 )
 
-type OrderListInputDTO struct {
-	Limit  int32
-	Offset int32
-}
-
 type OrderListOutputDTO struct {
 	Orders []entity.Order
 	Total  int32
@@ -37,6 +32,6 @@ func (l *ListOrdersUseCase) Execute() (OrderListOutputDTO, error) {
 
 	return OrderListOutputDTO{
 		Orders: orders,
-		Total:  total,
+		Total:  int32(total),
 	}, nil
 }
