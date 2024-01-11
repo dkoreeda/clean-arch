@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-
 	"github.com/devfullcycle/20-CleanArch/internal/infra/graph/model"
 	"github.com/devfullcycle/20-CleanArch/internal/usecase"
 )
@@ -30,7 +29,26 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input *model.OrderIn
 	}, nil
 }
 
+// Orders is the resolver for the orders field.
+func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
+	orders, err := r.ListOrdersUseCase.Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	var ordersModel []*model.Order
+	for _, o := range orders.Orders {
+		ordersModel = append(ordersModel, &model.Order{ID: o.ID, Price: o.Price, Tax: o.Tax, FinalPrice: o.FinalPrice})
+	}
+
+	return ordersModel, nil
+}
+
 // Mutation returns MutationResolver implementation.
 func (r *Resolver) Mutation() MutationResolver { return &mutationResolver{r} }
 
+// Query returns QueryResolver implementation.
+func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+
 type mutationResolver struct{ *Resolver }
+type queryResolver struct{ *Resolver }

@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"github.com/devfullcycle/20-CleanArch/internal/entity"
 )
 
@@ -12,8 +13,6 @@ type OrderListInputDTO struct {
 type OrderListOutputDTO struct {
 	Orders []entity.Order
 	Total  int32
-	Limit  int32
-	Offset int32
 }
 
 type ListOrdersUseCase struct {
@@ -24,9 +23,10 @@ func NewListOrdersUseCase(OrderRepository entity.OrderRepositoryInterface) *List
 	return &ListOrdersUseCase{OrderRepository: OrderRepository}
 }
 
-func (l *ListOrdersUseCase) Execute(input OrderListInputDTO) (OrderListOutputDTO, error) {
-	orders, err := l.OrderRepository.List(input.Limit, input.Offset)
+func (l *ListOrdersUseCase) Execute() (OrderListOutputDTO, error) {
+	orders, err := l.OrderRepository.List()
 	if err != nil {
+		fmt.Printf("execute error: %v\n", err)
 		return OrderListOutputDTO{}, err
 	}
 
@@ -38,7 +38,5 @@ func (l *ListOrdersUseCase) Execute(input OrderListInputDTO) (OrderListOutputDTO
 	return OrderListOutputDTO{
 		Orders: orders,
 		Total:  total,
-		Limit:  input.Limit,
-		Offset: input.Offset,
 	}, nil
 }

@@ -36,9 +36,8 @@ func (r *OrderRepository) GetTotal() (int32, error) {
 	return total, nil
 }
 
-func (r *OrderRepository) List(limit, offset int32) ([]entity.Order, error) {
-	columns := "id, price, tax, final_price"
-	rows, err := r.Db.Query(fmt.Sprintf("select %s from orders limit %d offset %d", columns, limit, offset))
+func (r *OrderRepository) List() ([]entity.Order, error) {
+	rows, err := r.Db.Query("select id, price, tax, final_price from orders")
 	if err != nil {
 		return nil, err
 	}

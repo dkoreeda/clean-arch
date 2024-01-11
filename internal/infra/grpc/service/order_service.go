@@ -37,8 +37,8 @@ func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderReques
 	}, nil
 }
 
-func (s *OrderService) ListOrders(ctx context.Context, in *pb.ListOrdersRequest) (*pb.ListOrdersResponse, error) {
-	output, err := s.ListOrdersUseCase.Execute(usecase.OrderListInputDTO{Limit: in.Limit, Offset: in.Offset})
+func (s *OrderService) ListOrders(ctx context.Context, in *pb.Blank) (*pb.ListOrdersResponse, error) {
+	output, err := s.ListOrdersUseCase.Execute()
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,5 @@ func (s *OrderService) ListOrders(ctx context.Context, in *pb.ListOrdersRequest)
 	return &pb.ListOrdersResponse{
 		Orders: orders,
 		Total:  output.Total,
-		Limit:  output.Limit,
-		Offset: output.Offset,
 	}, nil
 }
