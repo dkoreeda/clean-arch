@@ -4,6 +4,6 @@ Content-Type: application/json
 
 {
     "id":"a",
-    "price": 100.5,
+    "price": 110.5,
     "tax": 0.5
 }
